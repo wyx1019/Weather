@@ -1,8 +1,8 @@
 <template>
   <div class="about">
     <h1>現在の天気</h1>
-    <select v-model="selectValue" v-on:change="showWeather">
-      <option value="">都市を選んでください</option>
+    <select v-model="selectCity">
+      <!-- <option value="">都市を選んでください</option> -->
       <option value="Sapporo">札幌</option>
       <option value="Sendai">仙台</option>
       <option value="Tokyo">東京</option>
@@ -41,36 +41,40 @@
 export default {
   data() {
     return {
-      city: "",
+      city: "Tokyo",
       temp: "",
       condition: {
         main: "",
       },
-      selectValue: "",
+      selectCity: "Tokyo",
     };
   },
-  methods: {
-    showWeather() {
-      //   console.log(this.selectValue);
-      let apiURL =
-        "https://api.openweathermap.org/data/2.5/forecast?q=" +
-        this.selectValue +
-        ",jp&units=metric&lang=ja&APPID=180cd81c3216710c472690ffec5655be";
-      this.axios
-        .get(apiURL)
-        .then(
-          //axiosの処理が成功した場合に処理させたいことを記述
-          function(response) {
-            this.city = response.data.city.name;
-            this.temp = response.data.list[0].main.temp;
-            this.condition = response.data.list[0].weather[0];
-            // console.log(response);
-          }.bind(this)
-        )
-        .catch(function(error) {
-          //axiosの処理にエラーが発生した場合に処理させたいことを記述
-          console.log(error);
-        });
+  methods: {},
+  watch: {
+    selectCity: {
+      handler(selectCity) {
+        console.log(selectCity);
+        let apiURL =
+          "https://api.openweathermap.org/data/2.5/forecast?q=" +
+          this.selectCity +
+          ",jp&units=metric&lang=ja&APPID=180cd81c3216710c472690ffec5655be";
+        this.axios
+          .get(apiURL)
+          .then(
+            //axiosの処理が成功した場合に処理させたいことを記述
+            function(response) {
+              this.city = response.data.city.name;
+              this.temp = response.data.list[0].main.temp;
+              this.condition = response.data.list[0].weather[0];
+              // console.log(response);
+            }.bind(this)
+          )
+          .catch(function(error) {
+            //axiosの処理にエラーが発生した場合に処理させたいことを記述
+            console.log(error);
+          });
+      },
+      immediate: true,
     },
   },
 };
