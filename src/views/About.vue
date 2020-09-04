@@ -1,5 +1,8 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="user-list">
+    <h1>ユーザーリスト</h1>
+    <div>
+      <input class="btn" type="button" value="" />
+    </div>
   </div>
 </template>

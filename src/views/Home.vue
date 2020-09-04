@@ -2,7 +2,6 @@
   <div class="about">
     <h1>現在の天気</h1>
     <select v-model="selectCity">
-      <!-- <option value="">都市を選んでください</option> -->
       <option value="Sapporo">札幌</option>
       <option value="Sendai">仙台</option>
       <option value="Tokyo">東京</option>
@@ -13,7 +12,7 @@
     </select>
     <!-- <h2>今日の天気</h2> -->
     <p class="weather_city">{{ city }}</p>
-    <p class="weather_city">気温{{ temp }}℃</p>
+    <p class="weather_city">{{ temp | formatTemp }}</p>
     <p v-if="condition.main == 'Rain'">雨</p>
     <p v-else-if="condition.main == 'Clouds'">曇り</p>
     <p v-else-if="condition.main == 'Clear'">晴れ</p>
@@ -28,7 +27,7 @@
     />
     <img v-show="condition.main == 'Rain'" src="../assets/rain.jpeg" alt="" />
     <!-- <h2>明日の天気</h2>
-    <p class="weather_city">気温{{ temp }}℃</p>
+    <p class="weather_city">{{ temp }}℃</p>
     <p v-if="condition.main == 'Rain'">雨</p>
     <p v-else-if="condition.main == 'Clouds'">曇り</p>
     <p v-else-if="condition.main == 'Clear'">晴れ</p>
@@ -41,7 +40,7 @@
 export default {
   data() {
     return {
-      city: "Tokyo",
+      city: "",
       temp: "",
       condition: {
         main: "",
@@ -75,6 +74,11 @@ export default {
           });
       },
       immediate: true,
+    },
+  },
+  filters: {
+    formatTemp: function(val) {
+      return (val = val + "℃");
     },
   },
 };
