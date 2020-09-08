@@ -98,6 +98,6 @@ select {
   padding: 5px 10px 7px;
   width: 20%;
   max-width: 150px;
-  text-align: center;
+  border: #2c3e50 1px solid;
 }
 </style>
